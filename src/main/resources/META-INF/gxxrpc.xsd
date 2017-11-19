@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns="http://www.recorddrip.com/schema/gxxrpc"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.recorddrip.com/schema/gxxrpc">
+	<!-- 应用 -->
+	<xsd:element name="application">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="optional" fixed="application" />
+			<!-- 系统名称 -->
+			<xsd:attribute name="name" type="xsd:string" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+	<!-- 服务端 -->
+	<xsd:element name="server">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="optional" fixed="server" />
+			<!-- 监听端口 -->
+			<xsd:attribute name="port" type="xsd:string" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+	<!-- 客户端 -->
+	<xsd:element name="client">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="optional" fixed="client" />
+			<!-- 负载均衡 -->
+			<xsd:attribute name="load_balance" type="xsd:string" use="optional" default="poll" />
+		</xsd:complexType>
+	</xsd:element>
+	<!-- telnet治理服务端 -->
+	<xsd:element name="telnet_manage">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="optional" fixed="telnet_manage" />
+			<!-- 监听端口 -->
+			<xsd:attribute name="port" type="xsd:string" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+	<!-- 监控 -->
+	<xsd:element name="monitor">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="optional" fixed="monitor" />
+			<!-- 监控ip -->
+			<xsd:attribute name="ip" type="xsd:string" use="required" />
+			<!-- 监控端口 -->
+			<xsd:attribute name="port" type="xsd:integer" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+	<!-- 注册中心 -->
+	<xsd:element name="register">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="optional" fixed="register" />
+			<!-- 类型 -->
+			<xsd:attribute name="type" type="xsd:string" use="required" />
+			<!-- ip -->
+			<xsd:attribute name="ip" type="xsd:string" />
+			<!-- 端口 -->
+			<xsd:attribute name="port" type="xsd:string" />
+			<!-- 用户名 -->
+			<xsd:attribute name="username" type="xsd:string" />
+			<!-- 密码 -->
+			<xsd:attribute name="password" type="xsd:string" />
+		</xsd:complexType>
+	</xsd:element>
+	<!-- 服务 -->
+	<xsd:element name="service">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="required" />
+			<!-- 服务接口名称 -->
+			<xsd:attribute name="name" type="xsd:string" use="required" />
+			<!-- 服务实现类 -->
+			<xsd:attribute name="impl" type="xsd:string" />
+			<!-- 服务实现相关类 -->
+			<xsd:attribute name="ref" type="xsd:string" />
+			<!-- 版本 -->
+			<xsd:attribute name="version" type="xsd:string" />
+			<!-- 权重 -->
+			<xsd:attribute name="weight" use="optional" default="5">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:minInclusive value="0" />
+						<xsd:maxInclusive value="10" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- 引用 -->
+	<xsd:element name="refrence">
+		<xsd:complexType>
+			<!-- id 必须 -->
+			<xsd:attribute name="id" type="xsd:string" use="required" />
+			<!-- 服务接口名称 -->
+			<xsd:attribute name="name" type="xsd:string" use="required" />
+			<!-- 版本 -->
+			<xsd:attribute name="version" type="xsd:string" />
+			<!-- 超时毫秒数 -->
+			<xsd:attribute name="timeout" type="xsd:integer" default="5000" />
+			<!-- 指向服务ip -->
+			<xsd:attribute name="direct_server_ip" type="xsd:string" />
+			<!-- 指向服务端口 -->
+			<xsd:attribute name="direct_server_port" type="xsd:string" />
+			<!-- 集群容错策略 -->
+			<xsd:attribute name="cluster_fault" type="xsd:string"
+				use="optional" default="fail_fast" />
+			<!-- 使用缓存 -->
+			<xsd:attribute name="use_cache" use="optional" default="false">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="true" />
+						<xsd:enumeration value="false" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<!-- 缓存时间(秒) -->
+			<xsd:attribute name="cache_time" type="xsd:integer" />
+			<!-- 异步 -->
+			<xsd:attribute name="async" use="optional" default="false">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="true" />
+						<xsd:enumeration value="false" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<!-- 本地调用 -->
+			<xsd:attribute name="search_local" use="optional" default="false">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="true" />
+						<xsd:enumeration value="false" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<!-- 是否拦截 -->
+			<xsd:attribute name="intercept" use="optional" default="false">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="true" />
+						<xsd:enumeration value="false" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<!-- 拦截器 -->
+			<xsd:attribute name="interceptor" type="xsd:string" />
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

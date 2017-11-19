@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:gxxrpc="http://www.recorddrip.com/schema/gxxrpc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.recorddrip.com/schema/gxxrpc http://www.recorddrip.com/schema/gxxrpc/gxxrpc.xsd">
+
+	<!-- 应用 -->
+	<gxxrpc:application name="rpc_server" />
+	
+	<!-- 服务端 -->
+	<gxxrpc:server port="9527" />
+	
+	<!-- telnet治理服务端 -->
+	<gxxrpc:telnet_manage port="9537" />
+	
+	<!-- 注册中心 -->
+	<gxxrpc:register type="zookeeper" ip="121.43.104.34" port="2181" />
+	
+	<!-- 提供服务 -->
+	<gxxrpc:service id="userService" name="com.gxx.rpc.service.UserService" 
+		impl="com.gxx.rpc.service.UserServiceImpl" version="1.0" weight="10" />
+	
+</beans>
